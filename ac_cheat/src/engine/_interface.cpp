@@ -5,7 +5,7 @@ void _interface::init_menu() {
 		toggle_menu();
 	draw_menu();
 }
-
+ 
 void _interface::draw_menu() {
 	if (globals::vars::menu_settings::menu_open) {
 
