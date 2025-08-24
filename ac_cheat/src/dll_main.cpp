@@ -11,6 +11,7 @@ void hooks::init() {
 	hooks::load_hooks();
 }
 
+
 bool APIENTRY DllMain(HANDLE h, int r, LPVOID lp) {
 	switch (r) {
 	case DLL_PROCESS_ATTACH:
