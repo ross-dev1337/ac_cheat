@@ -14,7 +14,6 @@
 
 #include "MinHook.h"
 
-
 #include "engine/globals.h"
 #include "engine/structs.h"
 #include "engine/functions.h"
