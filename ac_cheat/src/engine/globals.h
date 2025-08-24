@@ -3,6 +3,7 @@
 namespace globals::vars {
 	extern HWND window;
 	extern bool run;
+	extern WNDPROC org_wndproc;
 
 	namespace menu_settings {
 		extern bool menu_open;

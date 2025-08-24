@@ -3,6 +3,7 @@
 namespace globals::vars {
 	HWND window = 0;
 	bool run = false;
+	WNDPROC org_wndproc = nullptr; 
 
 	namespace menu_settings {
 		bool menu_open = false;

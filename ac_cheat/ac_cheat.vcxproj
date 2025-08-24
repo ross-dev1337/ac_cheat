@@ -126,6 +126,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\dll_main.cpp" />
+    <ClCompile Include="src\engine\functions.cpp" />
     <ClCompile Include="src\engine\globals.cpp" />
     <ClCompile Include="src\engine\hooks.cpp" />
     <ClCompile Include="src\engine\_interface.cpp" />
@@ -144,8 +145,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dll_main.h" />
+    <ClInclude Include="src\engine\functions.h" />
     <ClInclude Include="src\engine\globals.h" />
     <ClInclude Include="src\engine\hooks.h" />
+    <ClInclude Include="src\engine\structs.h" />
     <ClInclude Include="src\engine\_interface.h" />
     <ClInclude Include="src\imgui\imconfig.h" />
     <ClInclude Include="src\imgui\imgui.h" />

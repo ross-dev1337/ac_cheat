@@ -16,5 +16,7 @@
 
 
 #include "engine/globals.h"
+#include "engine/structs.h"
+#include "engine/functions.h"
 #include "engine/_interface.h"
 #include "engine/hooks.h"

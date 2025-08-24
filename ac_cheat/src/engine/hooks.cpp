@@ -1,7 +1,29 @@
 #include "dll_main.h"
 
+IMGUI_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 namespace original_stub {
 	decltype(&hooks::open_gl::wgl_swap_buffers) wgl_swap_buffers;
+}
+
+LRESULT hooks::wnd_proc(HWND hwnd, UINT umsg, WPARAM wparam, LPARAM lparam) {
+	if (globals::vars::menu_settings::menu_open) {
+		if (ImGui_ImplWin32_WndProcHandler(hwnd, umsg, wparam, lparam))
+			return 0;
+
+		switch (umsg) {
+		case WM_KEYDOWN:
+		case WM_KEYUP:
+		case WM_CHAR:
+		case WM_MOUSEMOVE:
+		case WM_LBUTTONDOWN:
+		case WM_LBUTTONUP:
+		case WM_RBUTTONDOWN:
+		case WM_RBUTTONUP:
+			return 0;
+		}
+	}
+	return CallWindowProc(globals::vars::org_wndproc, hwnd, umsg, wparam, lparam);
 }
 
 bool hooks::open_gl::wgl_swap_buffers(HDC p1) {
@@ -17,7 +39,9 @@ bool hooks::open_gl::wgl_swap_buffers(HDC p1) {
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
-	_interface::init_menu();
+//	_interface::init_menu();
+	bool test = true;
+	ImGui::ShowDemoWindow(&test);
 	ImGui::End();
 
 	ImGui::EndFrame();
@@ -33,6 +57,8 @@ void hooks::load_hooks() {
 		globals::vars::window = FindWindow(L"SDL_app", L"AssaultCube");
 
 		uint32_t wgl_swap_buffers = (uint32_t)GetProcAddress(GetModuleHandle(L"opengl32.dll"), "wglSwapBuffers");
+		globals::vars::org_wndproc = (WNDPROC)SetWindowLongPtr(globals::vars::window, GWLP_WNDPROC, (LONG_PTR)hooks::wnd_proc);
+
 
 		if (MH_CreateHook((void*)wgl_swap_buffers, (void**)hooks::open_gl::wgl_swap_buffers, (void**)&original_stub::wgl_swap_buffers) == MH_OK)
 			printf("wgl_swap_buffers - Hooked!\n");
@@ -50,7 +76,6 @@ void hooks::load_hooks() {
 		printf("Hooks - Failed to Initialize!\n");
 	}
 }
-
 
 void hooks::unload_hooks() {
 	if (MH_Uninitialize() == MH_OK) {
