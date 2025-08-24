@@ -45,7 +45,7 @@ namespace structs {
     };
 
     struct vector2 {
-        float x, y;
+        float x, y; 
     };
 
     struct vector4 {
