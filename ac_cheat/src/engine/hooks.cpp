@@ -38,7 +38,7 @@ bool hooks::open_gl::wgl_swap_buffers(HDC p1) {
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-
+	 
    _interface::init_menu();
 	ImGui::End();
 
