@@ -39,9 +39,7 @@ bool hooks::open_gl::wgl_swap_buffers(HDC p1) {
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
-//	_interface::init_menu();
-	bool test = true;
-	ImGui::ShowDemoWindow(&test);
+   _interface::init_menu();
 	ImGui::End();
 
 	ImGui::EndFrame();
@@ -59,18 +57,15 @@ void hooks::load_hooks() {
 		uint32_t wgl_swap_buffers = (uint32_t)GetProcAddress(GetModuleHandle(L"opengl32.dll"), "wglSwapBuffers");
 		globals::vars::org_wndproc = (WNDPROC)SetWindowLongPtr(globals::vars::window, GWLP_WNDPROC, (LONG_PTR)hooks::wnd_proc);
 
-
 		if (MH_CreateHook((void*)wgl_swap_buffers, (void**)hooks::open_gl::wgl_swap_buffers, (void**)&original_stub::wgl_swap_buffers) == MH_OK)
 			printf("wgl_swap_buffers - Hooked!\n");
 		else 
 			printf("wgl_swap_buffers Failed to Hook!\n");
 
-
 		if (MH_EnableHook(MH_ALL_HOOKS) == MH_OK)
 			printf("Hooks - Enabled!\n");
 		else
 			printf("Hooks failed to enable!\n");
-
 	}
 	else {
 		printf("Hooks - Failed to Initialize!\n");
