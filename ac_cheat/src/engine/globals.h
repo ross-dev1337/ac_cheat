@@ -13,7 +13,7 @@ namespace globals::vars {
 		}
 
 		namespace visuals {
-			extern bool snap_lines, names_distance, box;
+			extern bool snap_lines, names_distance, box; 
 		}
 	}
 }

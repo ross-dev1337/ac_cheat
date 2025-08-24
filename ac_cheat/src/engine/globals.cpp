@@ -8,7 +8,7 @@ namespace globals::vars {
 	namespace menu_settings {
 		bool menu_open = false;
 
-		namespace aimbot {
+		namespace aimbot { 
 			bool enable_aimbot, vis_check;
 		}
 
