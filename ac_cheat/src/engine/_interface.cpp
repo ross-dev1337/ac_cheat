@@ -53,7 +53,7 @@ void _interface::draw_menu() {
 
 void _interface::toggle_menu() {
 	!globals::vars::menu_settings::menu_open ? globals::vars::menu_settings::menu_open = true : globals::vars::menu_settings::menu_open = false;
-	functions::SDL2::SDL_SetRelativeMouseMove(!globals::vars::menu_settings::menu_open);
+	functions::SDL2::SDL_SetRelativeMouseMove(!globals::vars::menu_settings::menu_open); 
 }
 
 
