@@ -48,6 +48,7 @@ void _interface::draw_menu() {
 			ImGui::Checkbox("Draw Names+Distance", &globals::vars::menu_settings::visuals::names_distance);
 			ImGui::Checkbox("Draw Box", &globals::vars::menu_settings::visuals::box);
 		}
+		ImGui::End();
 	}
 }
 
