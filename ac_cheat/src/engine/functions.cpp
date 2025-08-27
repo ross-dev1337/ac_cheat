@@ -6,7 +6,7 @@ void functions::engine::update_ponters() {
 	structs::screen = (structs::screen_dimensions*)(globals::vars::module_base + 0x00191ED8);
 
 
-	globals::vars::engine::player_count = *(int*)(globals::vars::module_base + 0x18AC0C);
+	globals::vars::engine::player_count = *(int*)(globals::vars::module_base + 0x191FD4);
 	globals::vars::engine::view_matrix = (float*)(globals::vars::module_base + 0x17DFD0);
 }
 
