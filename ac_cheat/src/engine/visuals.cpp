@@ -101,7 +101,7 @@ bool visuals::world_to_screen(structs::vector3 pos, structs::vector3& screen)
 }
 
 void visuals::draw_visuals() {
-	structs::player* enemy = nullptr;
+	structs::player* enemy;
 	structs::vector3 feet_screen, head_screen;
 	ImVec4 esp_colour{ 1, 1, 1, 1 };
 
@@ -110,21 +110,24 @@ void visuals::draw_visuals() {
 	for (int32_t i = 0; i < globals::vars::engine::player_count; i++) {
 		enemy = structs::ent->ents[i];
 
-		//if (functions::client::is_me(enemy) || functions::client::is_dead(enemy)) continue;
+		if (functions::client::is_me(enemy) || functions::client::is_dead(enemy)) continue;
 
-		functions::client::is_friend(enemy) ? esp_colour = globals::vars::imgui_colors::blue : esp_colour = globals::vars::imgui_colors::red;
+		if (functions::client::is_friend(enemy))
+			esp_colour = globals::vars::imgui_colors::blue;
+		else
+			esp_colour = globals::vars::imgui_colors::red;
 
 		if (world_to_screen(enemy->root_origin, feet_screen) && world_to_screen(enemy->head_origin, head_screen)) {
 			float width = fabs((head_screen.y - feet_screen.y) / 2.f);
 			float height = width * 2;
-
-		//	if(globals::vars::menu_settings::visuals::snap_lines)
+			 
+			if(globals::vars::menu_settings::visuals::snap_lines)
 				drawing::draw_line(center_x, structs::screen->screen_height, feet_screen.x, feet_screen.y, esp_colour, 1);
 			
-		//	if(globals::vars::menu_settings::visuals::box)
+			if(globals::vars::menu_settings::visuals::box)
 				drawing::draw_2d_box(head_screen.x, head_screen.y, width, height, esp_colour, 1);
 			
-			//if(globals::vars::menu_settings::visuals::names_distance)
+			if(globals::vars::menu_settings::visuals::names_distance)
 				drawing::draw_text_shader(functions::utilites::va("%s - [ %.2f ]", enemy->name, structs::local_player->root_origin.get_distance(enemy->root_origin) / 100), head_screen.x, head_screen.y - 30, globals::vars::imgui_colors::white, globals::vars::imgui_colors::black, globals::vars::ALIGN_X_CENTER);
 
 		}
