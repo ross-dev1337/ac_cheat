@@ -29,6 +29,7 @@ LRESULT hooks::wnd_proc(HWND hwnd, UINT umsg, WPARAM wparam, LPARAM lparam) {
 bool hooks::open_gl::wgl_swap_buffers(HDC p1) {
 	if (!globals::vars::run) {
 		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO();
 
 		ImGui_ImplWin32_Init(globals::vars::window);
 		ImGui_ImplOpenGL2_Init();
@@ -39,9 +40,10 @@ bool hooks::open_gl::wgl_swap_buffers(HDC p1) {
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 	 
+	functions::engine::update_ponters();
 	_interface::init_menu();
+	visuals::draw_visuals();
  
-
 	ImGui::EndFrame();
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
@@ -53,6 +55,8 @@ void hooks::load_hooks() {
 		printf("Hooks - Initialized!\n");
 
 		globals::vars::window = FindWindow(L"SDL_app", L"AssaultCube");
+		globals::vars::module_base = (uint32_t)GetModuleHandle(L"ac_client.exe");
+		
 
 		uint32_t wgl_swap_buffers = (uint32_t)GetProcAddress(GetModuleHandle(L"opengl32.dll"), "wglSwapBuffers");
 		globals::vars::org_wndproc = (WNDPROC)SetWindowLongPtr(globals::vars::window, GWLP_WNDPROC, (LONG_PTR)hooks::wnd_proc);
@@ -76,7 +80,13 @@ void hooks::unload_hooks() {
 	if (MH_Uninitialize() == MH_OK) {
 		printf("Hooks - Uninitialized!\n");
 
+		ImGui_ImplOpenGL2_Shutdown();
+		ImGui_ImplWin32_Shutdown();
+		ImGui::DestroyContext();
+
 		MH_DisableHook(MH_ALL_HOOKS);
+		MH_RemoveHook(MH_ALL_HOOKS);
+		 
 	}
 	else {
 		printf("Hooks Failed to Uninitialize!");
