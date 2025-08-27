@@ -53,5 +53,39 @@ namespace structs {
     };
 
 
+   // <ac_client.exe>+0x0018AC00
+    struct player {
+        char _0x0000[0x4]; //0x0000
+        vector3 head_origin; //0x0004
+        char _0x0010[0x18]; //0x0010
+        vector3 root_origin; //0x0028
+        char _0x0034[0xB8]; //0x0034
+        int32_t current_health; //0x00EC
+        int32_t armour; //0x00F0
+        char _0x00F4[0x111];
+        char name[15]; // 0x0205
+        char _0x0214[0xF8];
+        int32_t team; // 0x030C
+    };
+    inline player* local_player;
+    
+
+    // <ac_client.exe>+0x18AC04
+    struct entity {
+        char _0x0000[0x4];
+        player* ents[32];
+    };
+    inline entity* ent; 
+ 
+    // <ac_client.exe>+0x00191ED8
+    struct screen_dimensions {
+        int32_t screen_width; // 0x0000
+        int32_t screen_height; // 0x0004
+    };
+    inline screen_dimensions* screen;
+  
+   
+
+  
 
 }
